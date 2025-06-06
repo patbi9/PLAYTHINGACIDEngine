@@ -1,33 +1,67 @@
 #pragma once
 #include "Prerequisites.h"
 
-class
-	Window {
+/**
+ * @class Window
+ * @brief Clase que encapsula una ventana SFML
+ *
+ */
+class Window {
 public:
-	Window() = default;
-	Window(int width, int height, const std::string& title);
-	~Window();
+    /**
+     * @brief Constructor
+     */
+    Window() = default;
 
-	void
-		handleEvents();
+    /**
+     * @brief Constructor que crea una ventana con las dimensiones que se especifican
+     * @param width Ancho de la ventana
+     * @param height Alto de la ventana
+     * @param title Título de la ventana
+     */
+    Window(int width, int height, const std::string& title);
 
-	bool 
-		isOpen() const;
+    /**
+     * @brief Destructor
+     */
+    ~Window();
 
-	void
-		clear(const sf::Color& color = sf::Color(0, 0, 0, 255));
+    /**
+     * @brief Maneja los eventos de la ventana
+     */
+    void handleEvents();
 
-	void 
-		draw(const sf::Drawable& drawable,
-			const sf::RenderStates& states = sf::RenderStates::Default);
+    /**
+     * @brief Verifica si la ventana está abierta
+     * @return Booleano si la ventana sigue abierta
+     */
+    bool isOpen() const;
 
-	void
-		display();
+    /**
+     * @brief Borra el contenido de la ventana
+     * @param color Color de fondo negro
+     */
+    void clear(const sf::Color& color = sf::Color(0, 0, 0, 255));
 
-	void
-		destroy();
+    /**
+     * @brief Dibuja un objeto en la ventana
+     * @param drawable Objeto SFML que puede dibujarse
+     * @param states Estados de renderizado
+     */
+    void draw(const sf::Drawable& drawable,
+        const sf::RenderStates& states = sf::RenderStates::Default);
+
+    /**
+     * @brief Muestra lo que se dibujó
+     */
+    void display();
+
+    /**
+     * @brief Destruye la ventana
+     */
+    void destroy();
 
 private:
-	sf::RenderWindow* m_window;
-	sf::View m_view;
+    sf::RenderWindow* m_window; /**< Puntero a la ventana real de SFML */
+    sf::View m_view;            /**< Vista para rednerizar */
 };

@@ -11,7 +11,7 @@ class Window;
 class CShape {
 public:
     /**
-     * @brief Constructor por defecto
+     * @brief Constructor
      */
     CShape() = default;
 
@@ -83,7 +83,7 @@ public:
     sf::Shape* getShape();
 
 private:
-    sf::Shape* m_shape;              /**< Puntero a la forma actual. */
-    ShapeType m_shapeType;           /**< Tipo de forma asociada. */
-    sf::VertexArray* m_line;         /**< (Opcional) Línea auxiliar, posiblemente para debug. */
+    sf::Shape* m_shape;              /**< Puntero a la forma actual */
+    ShapeType m_shapeType;           /**< Tipo de forma */
+    sf::VertexArray* m_line;         /**< Auxiliar para debug. */
 };
