@@ -6,16 +6,21 @@ CShape::createShape(ShapeType shapeType) {
 	m_shapeType = shapeType;
 	switch (shapeType) {
 	case ShapeType::CIRCLE:
+	{
 		sf::CircleShape* circle = new sf::CircleShape(10.f); //example radius
 		circle->setFillColor(sf::Color::White);
 		m_shape = circle;
 		return circle;
+	}
 	case ShapeType::RECTANGLE:
+	{
 		sf::RectangleShape* rectangle = new sf::RectangleShape(sf::Vector2f(100.f, 50.f)); //example size
 		rectangle->setFillColor(sf::Color::White);
 		m_shape = rectangle;
 		return rectangle;
+	}
 	case ShapeType::TRIANGLE:
+	{
 		sf::ConvexShape* triangle = new sf::ConvexShape(3);
 		triangle->setPoint(0, sf::Vector2f(0.f, 0.f));
 		triangle->setPoint(1, sf::Vector2f(50.f, 100.f));
@@ -23,7 +28,9 @@ CShape::createShape(ShapeType shapeType) {
 		triangle->setFillColor(sf::Color::White);
 		m_shape = triangle;
 		return triangle;
+	}
 	case ShapeType::POLYGON:
+	{
 		sf::ConvexShape* polygon = new sf::ConvexShape(5); //example with 5 points
 		polygon->setPoint(0, sf::Vector2f(0.f, 0.f));
 		polygon->setPoint(0, sf::Vector2f(50.f, 100.f));
@@ -33,6 +40,7 @@ CShape::createShape(ShapeType shapeType) {
 		polygon->setFillColor(sf::Color::White);
 		m_shape = polygon;
 		return polygon;
+	}
 	default:
 		break;
 	}

@@ -2,37 +2,51 @@
 #include "Prerequisites.h"
 #include "Window.h"
 
-class
-	BaseApp
-{
+/**
+ * @class BaseApp
+ * @brief La estructura principal del engine. Contiene la ejecución, inicialización, actualización, renderizado, y destruccion.
+ *
+ */
+class BaseApp {
 public:
-	BaseApp() = default;
-	~BaseApp();
+    /**
+     * @brief Constructor
+     */
+    BaseApp() = default;
 
-	//ejecutar aplicacion en main
-	int
-	run();
+    /**
+     * @brief Destructor
+     */
+    ~BaseApp();
 
-	//inicializacion
-	bool
-	init();
+    /**
+     * @brief Ejecuta el coreloop
+     *
+     */
+    int run();
 
-	//actualización por frame
-	void
-	update();
+    /**
+     * @brief Inicializa la ventana y los gráficos
+     */
+    bool init();
 
-	//renderizado
-	void
-	render();
+    /**
+     * @brief Actualiza cada frame
+     */
+    void update();
 
-	void
-	destroy();
+    /**
+     * @brief Renderiza los elementos por cada frame
+     */
+    void render();
+
+    /**
+     * @brief Destruye la ventana
+     */
+    void destroy();
 
 private:
-
-	Window* m_window;
-	//sf::RenderWindow* m_window;
-	sf::CircleShape* m_circle;
-	sf::RectangleShape* m_square;
-
+    Window* m_window;               /**< Puntero a la clase Window */
+    sf::CircleShape* m_circle;      /**< Puntero a un círculo */
+    sf::RectangleShape* m_square;   /**< Puntero a un rectángulo */
 };
