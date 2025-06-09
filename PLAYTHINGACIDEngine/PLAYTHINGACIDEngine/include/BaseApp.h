@@ -9,44 +9,44 @@
  */
 class BaseApp {
 public:
-    /**
-     * @brief Constructor
-     */
-    BaseApp() = default;
+ /**
+  * @brief Constructor
+  */
+ BaseApp() = default;
 
-    /**
-     * @brief Destructor
-     */
-    ~BaseApp();
+ /**
+ * @brief Destructor
+ */
+ ~BaseApp();
 
-    /**
-     * @brief Ejecuta el coreloop
-     *
-     */
-    int run();
+ /**
+  * @brief Ejecuta el coreloop
+  *
+  */
+ int run();
 
-    /**
-     * @brief Inicializa la ventana y los gráficos
-     */
-    bool init();
+ /**
+  * @brief Inicializa la ventana y los gráficos
+  */
+ bool init();
 
-    /**
-     * @brief Actualiza cada frame
-     */
-    void update();
+ /**
+  * @brief Actualiza cada frame
+  */
+ void update();
 
-    /**
-     * @brief Renderiza los elementos por cada frame
-     */
-    void render();
+ /**
+  * @brief Renderiza los elementos por cada frame
+  */
+ void render();
 
-    /**
-     * @brief Destruye la ventana
-     */
-    void destroy();
+ /**
+  * @brief Destruye la ventana
+  */
+ void destroy();
 
 private:
-    Window* m_window;               /**< Puntero a la clase Window */
-    sf::CircleShape* m_circle;      /**< Puntero a un círculo */
-    sf::RectangleShape* m_square;   /**< Puntero a un rectángulo */
+ Window* m_window;             /**< Puntero a la clase Window */
+ sf::CircleShape* m_circle;    /**< Puntero a un círculo */
+ sf::RectangleShape* m_square; /**< Puntero a un rectángulo */
 };
