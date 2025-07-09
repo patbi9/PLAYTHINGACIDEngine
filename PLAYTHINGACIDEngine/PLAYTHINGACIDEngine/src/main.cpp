@@ -2,6 +2,6 @@
 
 int
 main() {
-    BaseApp app;
-    return app.run();
+ BaseApp app;
+ return app.run();
 }

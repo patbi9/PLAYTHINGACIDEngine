@@ -1,52 +1,37 @@
 #pragma once
 #include "Prerequisites.h"
 #include "Window.h"
-
-/**
- * @class BaseApp
- * @brief La estructura principal del engine. Contiene la ejecución, inicialización, actualización, renderizado, y destruccion.
- *
- */
-class BaseApp {
+#include "CShape.h"
+class
+	BaseApp {
 public:
- /**
-  * @brief Constructor
-  */
- BaseApp() = default;
+	BaseApp() = default;
+	~BaseApp();
 
- /**
- * @brief Destructor
- */
- ~BaseApp();
+	// Funcion encargada de ejecutar la aplicacion en main
+	int
+		run();
 
- /**
-  * @brief Ejecuta el coreloop
-  *
-  */
- int run();
+	// Funcion de inicializacion
+	bool
+		init();
 
- /**
-  * @brief Inicializa la ventana y los gráficos
-  */
- bool init();
+	// Funcion que se actualiza por frame
+	void
+		update();
 
- /**
-  * @brief Actualiza cada frame
-  */
- void update();
+	// Funcion de renderizado
+	void
+		render();
 
- /**
-  * @brief Renderiza los elementos por cada frame
-  */
- void render();
+	void
+		destroy();
 
- /**
-  * @brief Destruye la ventana
-  */
- void destroy();
 
 private:
- Window* m_window;             /**< Puntero a la clase Window */
- sf::CircleShape* m_circle;    /**< Puntero a un círculo */
- sf::RectangleShape* m_square; /**< Puntero a un rectángulo */
+	EngineUtilities::TSharedPointer<Window> m_windowPtr;
+
+	EngineUtilities::TSharedPointer<CShape>   m_shapePtr;
+	EngineUtilities::TSharedPointer<CShape>   m_squarePtr;
+	EngineUtilities::TSharedPointer<CShape>   m_trianglePtr;
 };
