@@ -16,6 +16,12 @@
     <Filter Include="Memory">
       <UniqueIdentifier>{43af51eb-f9e8-42a3-bac6-8b7d2a1130ce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ECS">
+      <UniqueIdentifier>{096f325a-776e-4151-9ae2-fefba447e47d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ECS">
+      <UniqueIdentifier>{75194ec1-68b6-4007-85da-fa392c8984f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -29,6 +35,9 @@
     </ClCompile>
     <ClCompile Include="src\CShape.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ECS\Actor.cpp">
+      <Filter>Source Files\ECS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -55,6 +64,15 @@
     </ClInclude>
     <ClInclude Include="include\Memory\TWeakPointer.h">
       <Filter>Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\Component.h">
+      <Filter>ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\Entity.h">
+      <Filter>ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Actor.h">
+      <Filter>ECS</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

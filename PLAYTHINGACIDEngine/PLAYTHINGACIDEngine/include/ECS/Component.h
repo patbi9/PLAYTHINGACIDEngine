@@ -22,26 +22,26 @@ public:
 	Component() =  default;
 
 	Component(const ComponentType type) : m_type(type) {}
-
+	//destructor
 	virtual
 	~Component() = default;
-
+	//inicializar
 	virtual void
 		start(float deltaTime) = 0;
-
+	//actualizar
 	virtual void
 		update(float deltaTime) = 0;
-
+	//renderiza
 	virtual void
 		render(const EngineUtilities::TSharedPointer<Window>& window) = 0;
-
+	//limpiar
 	virtual void
 		destroy() = 0;
-
+	//obtener el tipo de componente
 	ComponentType
 		getType() const { return m_type; }
 
 protected:
-	ComponentType m_type;
+	ComponentType m_type; //tipo de componente
 
 };

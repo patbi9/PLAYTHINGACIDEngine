@@ -14,7 +14,7 @@ public:
 
 	//inicializar
 	virtual void
-		start(float deltaTime) = 0;
+		start() = 0;
 	//actualizar
 	virtual void
 		update(float deltaTime) = 0;
@@ -24,6 +24,26 @@ public:
 	//limpiar
 	virtual void
 		destroy() = 0;
+
+	//agregar un componente a la entidad
+	template<typename T> void
+	addComponent(EngineUtilities::TSharedPointer<T> component) {
+		static_assert(std::is_base_of<Component, T>::value, "T must be derived from component");
+		components.push_back(component.template dynamic_pointer_cast<Component>());
+	}
+
+	//obtener el componente de la entidad
+	template<typename T>
+	EngineUtilities::TSharedPointer<T>
+		getComponent() {
+		for (auto& component : components) {
+			EngineUtilities::TSharedPointer<T> specificComponent = component.template dynamic_pointer_cast<T> ();
+			if (specificComponent) {
+				return specificComponent;
+			}
+		}
+		return EngineUtilities::TSharedPointer<T>();
+	}
 
 protected:
 
