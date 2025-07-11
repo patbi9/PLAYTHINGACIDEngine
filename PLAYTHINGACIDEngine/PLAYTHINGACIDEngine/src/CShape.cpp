@@ -44,11 +44,20 @@ CShape::createShape(ShapeType type) {
     }
 }
 
+void CShape::start(){
+}
+
+void CShape::update(float deltaTime){
+}
+
 void
 CShape::render(const EngineUtilities::TSharedPointer<Window>& window) {
     if (m_shapePtr) {
         window->draw(*m_shapePtr);
     }
+}
+
+void CShape::destroy() {
 }
 
 void CShape::setPosition(float x, float y) {

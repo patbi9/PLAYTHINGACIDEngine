@@ -1,15 +1,19 @@
 #pragma once
 #include "Prerequisites.h"
+#include "ECS\Component.h"
 
 class Window;
 
 class
-	CShape {
+	CShape : public Component {
 public:
 	CShape() = default;
 
-	CShape(ShapeType shapeType) : m_shapePtr(nullptr), m_shapeType(ShapeType::EMPTY) {}
+	CShape(ShapeType shapeType) : m_shapePtr(nullptr), 
+								  m_shapeType(ShapeType::EMPTY), 
+								  Component(ComponentType::SHAPE) {}
 
+	virtual
 	~CShape() = default;
 
 	/**
@@ -20,10 +24,16 @@ public:
 		createShape(ShapeType shapeType);
 
 	void
-		update(float deltaTime);
+		start() override;
 
 	void
-		render(const EngineUtilities::TSharedPointer<Window>& window);
+		update(float deltaTime) override;
+
+	void
+		render(const EngineUtilities::TSharedPointer<Window>& window) override;
+
+	void
+		destroy() override;
 
 	void
 		setPosition(float x, float y);

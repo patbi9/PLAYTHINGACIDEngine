@@ -27,7 +27,7 @@ public:
 	~Component() = default;
 	//inicializar
 	virtual void
-		start(float deltaTime) = 0;
+		start() = 0;
 	//actualizar
 	virtual void
 		update(float deltaTime) = 0;

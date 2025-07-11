@@ -1,6 +1,7 @@
 #pragma once
 #include "Prerequisites.h"
 #include "ECS/Entity.h"
+#include "CShape.h"
 
 class
 	Actor : Entity {
