@@ -3,6 +3,7 @@
 #include "Component.h"
 using sf::Vector2f;
 
+//clase trans
 class Transform : public Component
 {
 public:
@@ -13,11 +14,11 @@ public:
 	{
 	}
 
-	void 
-		start() override {}
+	void
+		start() override {};
 
-	void 
-		update(float deltaTime) override {}
+	void
+		update(float deltaTime) override{}
 
 	void 
 		render(const EngineUtilities::TSharedPointer<Window>& window) override {}
@@ -61,7 +62,7 @@ public:
 	~Transform() = default;
 
 private:
-	sf::Vector2f position;
-	sf::Vector2f rotation;
-	sf::Vector2f scale;
+	Vector2f position;
+	Vector2f rotation;
+	Vector2f scale;
 };

@@ -1,5 +1,6 @@
 #include "BaseApp.h"
 
+
 BaseApp::~BaseApp() {
 }
 
@@ -40,52 +41,45 @@ BaseApp::init() {
 		m_shapePtr->setPosition(200.f, 150.f);
 	}
 
-	// Create a square shape
-	m_squarePtr = EngineUtilities::MakeShared<CShape>();
-	if (m_squarePtr)
-	{
-		m_squarePtr->createShape(ShapeType::RECTANGLE);
-		m_squarePtr->setFillColor(sf::Color::White);
-		m_squarePtr->setPosition(400.f, 150.f); // posición al lado del círculo
+	//create circle actor
+	m_ACircle = EngineUtilities::MakeShared<Actor>("Circle Actor");
+	if (m_ACircle) {
+		m_ACircle->getComponent<CShape>()->createShape(ShapeType::CIRCLE);
+		m_ACircle->getComponent<CShape>()->setFillColor(sf::Color::Green);
+		m_ACircle->getComponent<Transform>()->setPosition(sf::Vector2f(500.f, 150.f));
+		//m_ACircle->setName("Circle Actor");
 	}
-
-	// Create a triangle shape
-	m_trianglePtr = EngineUtilities::MakeShared<CShape>();
-	if (m_trianglePtr)
-	{
-		m_trianglePtr->createShape(ShapeType::TRIANGLE);
-		m_trianglePtr->setFillColor(sf::Color::White);
-		m_trianglePtr->setPosition(600.f, 150.f); // posicion al lado del cuadrado
+	else {
+		ERROR("BaseApp",
+			"init",
+			"Failed to create circle actor, check memory allocation");
+		return false;
 	}
 
 	return true;
+
 }
 
 void
 BaseApp::update() {
+	//update actor
+	if (!m_ACircle.isNull()) {
+		m_ACircle->update(0);
+	}
 }
 
 void
 BaseApp::render() {
+	if (!m_windowPtr) {
+		return;
+	}
 	m_windowPtr->clear();
 	if (m_shapePtr) {
-		m_shapePtr->render(m_windowPtr); // Asumiendo que render es un método de sf::Shape
-		// draw toma un sf::Shape&, así que desreferenciamos
-		//m_windowPtr->draw(*m_shapePtr);
+		m_shapePtr->render(m_windowPtr);
 	}
-
-	if (m_squarePtr) {
-		m_squarePtr->render(m_windowPtr); // Asumiendo que render es un método de sf::Shape
-		// draw toma un sf::Shape&, así que desreferenciamos
-		//m_windowPtr->draw(*m_shapePtr);
+	if (!m_ACircle.isNull()) {
+		m_ACircle->getComponent<CShape>()->render(m_windowPtr);
 	}
-
-	if (m_trianglePtr) {
-		m_trianglePtr->render(m_windowPtr); // Asumiendo que render es un método de sf::Shape
-		// draw toma un sf::Shape&, así que desreferenciamos
-		//m_windowPtr->draw(*m_shapePtr);
-	}
-
 	m_windowPtr->display();
 }
 

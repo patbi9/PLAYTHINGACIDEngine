@@ -2,6 +2,7 @@
 #include "Prerequisites.h"
 #include "ECS/Entity.h"
 #include "CShape.h"
+#include "ECS/Transform.h"
 
 class
 	Actor : Entity {
@@ -14,7 +15,7 @@ public:
 	~Actor() = default;
 
 	void
-		start() override;
+		start() override {};
 
 	void
 		update(float deltaTime) override;
@@ -23,7 +24,7 @@ public:
 		render(const EngineUtilities::TSharedPointer<Window>& window) override;
 
 	void
-		destroy() override;
+		destroy() override {};
 
 	template<typename T>
 	EngineUtilities::TSharedPointer<T>

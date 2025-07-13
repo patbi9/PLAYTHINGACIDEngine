@@ -22,6 +22,9 @@
     <Filter Include="Source Files\ECS">
       <UniqueIdentifier>{75194ec1-68b6-4007-85da-fa392c8984f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utilities">
+      <UniqueIdentifier>{b9b3ced9-1f89-418a-93b1-fa289a380f14}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -79,6 +82,9 @@
     </ClInclude>
     <ClInclude Include="include\ECS\Transform.h">
       <Filter>ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utilities\CVector2.h">
+      <Filter>Utilities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
