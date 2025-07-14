@@ -4,37 +4,61 @@
 #include "CShape.h"
 #include "Actor.h"
 
+/**
+ * @class BaseApp
+ * @brief Main application class that manages the window, initialization, update, rendering, and cleanup.
+ *
+ * This class is responsible for driving the lifecycle of the engine application,
+ * including managing the main loop and handling scene objects like shapes and actors.
+ */
 class
-	BaseApp {
+ BaseApp {
 public:
-	BaseApp() = default;
-	~BaseApp();
+ /**
+  * @brief Default constructor.
+  */
+ BaseApp() = default;
 
-	// Funcion encargada de ejecutar la aplicacion en main
-	int
-		run();
+ /**
+  * @brief Destructor. Calls destroy internally to clean up resources.
+  */
+ ~BaseApp();
 
-	// Funcion de inicializacion
-	bool
-		init();
+ /**
+  * @brief Entry point for running the application.
+  * @return Exit code from the application.
+  */
+ int
+  run();
 
-	// Funcion que se actualiza por frame
-	void
-		update();
+ /**
+  * @brief Initializes the application and its subsystems.
+  * @return True if initialization was successful, false otherwise.
+  */
+ bool
+  init();
 
-	// Funcion de renderizado
-	void
-		render();
+ /**
+  * @brief Updates application logic once per frame.
+  */
+ void 
+  update();
 
-	void
-		destroy();
+ /**
+  * @brief Renders the current frame.
+  */
+ void 
+  render();
 
+ /**
+  * @brief Cleans up resources and shuts down the application.
+  */
+ void 
+  destroy();
 
 private:
-	EngineUtilities::TSharedPointer<Window> m_windowPtr;
-
-	EngineUtilities::TSharedPointer<CShape>   m_shapePtr;
-
-	EngineUtilities::TSharedPointer<Actor>   m_ACircle;
-	EngineUtilities::TSharedPointer<Actor>   m_ACircle2;
+ EngineUtilities::TSharedPointer<Window> m_windowPtr; ///< Pointer to the application window.
+ EngineUtilities::TSharedPointer<CShape> m_shapePtr; ///< Pointer to a shape object (used for rendering).
+ EngineUtilities::TSharedPointer<Actor> m_ACircle;  ///< Pointer to the first actor.
+ EngineUtilities::TSharedPointer<Actor> m_ACircle2; ///< Pointer to the second actor.
 };

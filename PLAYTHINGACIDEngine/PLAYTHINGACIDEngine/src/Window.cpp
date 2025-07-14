@@ -2,7 +2,7 @@
 
 Window::Window(int width, int height, const std::string& title) {
  //Inicializar ventana
-    m_windowPtr = EngineUtilities::MakeUnique <sf::RenderWindow> (sf::VideoMode(width, height), title);
+ m_windowPtr = EngineUtilities::MakeUnique <sf::RenderWindow> (sf::VideoMode(width, height), title);
 
  //m_window = new sf::RenderWindow(sf::VideoMode(width, height), title);
 
@@ -16,13 +16,13 @@ Window::Window(int width, int height, const std::string& title) {
 }
 
 Window::~Window(){
-    m_windowPtr.release();
+ m_windowPtr.release();
  //SAFE_PTR_RELEASE(m_window);
 }
 
 void 
-Window::handleEvents()
-{
+ Window::handleEvents()
+ {
  sf::Event event;
  while (m_windowPtr->pollEvent(event)) {
   // Cerrar la ventana si el usuario lo indica
@@ -33,7 +33,7 @@ Window::handleEvents()
 }
 
 bool
-Window::isOpen() const {
+ Window::isOpen() const {
  // Check that window is not null
 
  if (!m_windowPtr.isNull()) {
@@ -57,7 +57,7 @@ void
 }
 
 void
-Window::draw(const sf::Drawable& drawable, const sf::RenderStates& states) {
+ Window::draw(const sf::Drawable& drawable, const sf::RenderStates& states) {
  if (!m_windowPtr.isNull()) {
   m_windowPtr->draw(drawable, states);
  }
@@ -67,7 +67,7 @@ Window::draw(const sf::Drawable& drawable, const sf::RenderStates& states) {
 }
 
 void
-Window::display() {
+ Window::display() {
  if (!m_windowPtr.isNull()) {
   m_windowPtr->display();
  }
@@ -77,7 +77,7 @@ Window::display() {
 }
 
 void 
-Window::destroy() {
+ Window::destroy() {
     m_windowPtr.release();
  //SAFE_PTR_RELEASE(m_window);
 }

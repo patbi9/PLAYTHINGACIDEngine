@@ -69,7 +69,7 @@ public:
   destroy();
 
 private:
-	EngineUtilities::TUniquePtr < sf::RenderWindow> m_windowPtr;
+ EngineUtilities::TUniquePtr < sf::RenderWindow> m_windowPtr;
  //sf::RenderWindow* m_window; /**< Puntero a la ventana real de SFML */
  sf::View m_view;            /**< Vista para rednerizar */
 };
