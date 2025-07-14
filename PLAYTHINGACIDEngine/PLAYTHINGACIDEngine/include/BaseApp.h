@@ -36,4 +36,5 @@ private:
 	EngineUtilities::TSharedPointer<CShape>   m_shapePtr;
 
 	EngineUtilities::TSharedPointer<Actor>   m_ACircle;
+	EngineUtilities::TSharedPointer<Actor>   m_ACircle2;
 };
