@@ -12,7 +12,7 @@ CShape::createShape(ShapeType type) {
         break;
   }
   case ShapeType::RECTANGLE: {
-   auto rectSP = EngineUtilities::MakeShared<sf::RectangleShape>(sf::Vector2f(200.f, 200.f));
+   auto rectSP = EngineUtilities::MakeShared<sf::RectangleShape>(sf::Vector2f(50.f, 50.f));
         rectSP->setFillColor(sf::Color::White);
         m_shapePtr = rectSP.dynamic_pointer_cast<sf::Shape>();
         break;

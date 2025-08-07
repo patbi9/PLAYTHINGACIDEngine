@@ -62,6 +62,9 @@ public:
  void
   display();
 
+ void
+	 update();
+
  /**
   * @brief Destruye la ventana
   */
@@ -70,6 +73,8 @@ public:
 
 private:
  EngineUtilities::TUniquePtr < sf::RenderWindow> m_windowPtr;
- //sf::RenderWindow* m_window; /**< Puntero a la ventana real de SFML */
- sf::View m_view;            /**< Vista para rednerizar */
+ sf::View m_view;
+public:
+ sf::Time deltaTime;
+ sf::Clock clock;
 };

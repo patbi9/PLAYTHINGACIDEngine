@@ -58,7 +58,7 @@ public:
 
 private:
  EngineUtilities::TSharedPointer<Window> m_windowPtr; ///< Pointer to the application window.
- EngineUtilities::TSharedPointer<CShape> m_shapePtr; ///< Pointer to a shape object (used for rendering).
  EngineUtilities::TSharedPointer<Actor> m_ACircle;  ///< Pointer to the first actor.
- EngineUtilities::TSharedPointer<Actor> m_ACircle2; ///< Pointer to the second actor.
+ std::vector<sf::Vector2f> m_waypoints;
+ size_t m_currentWaypointIndex = 0;
 };

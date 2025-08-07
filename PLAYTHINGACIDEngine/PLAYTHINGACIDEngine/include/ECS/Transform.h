@@ -1,6 +1,7 @@
 #pragma once
 #include "Prerequisites.h"
 #include "Component.h"
+#include "Math/EngineMath.h"
 using sf::Vector2f;
 
 /**
@@ -49,6 +50,20 @@ public:
   */
  void
   destroy() override {}
+
+ void
+	 seek(const sf::Vector2f& targetPosition,
+		 float speed,
+		 float deltaTime,
+		 float range) {
+	 sf::Vector2f direction = targetPosition - position;
+	 float length = sqrt(direction.x * direction.x + direction.y * direction.y);
+
+	 if (length > range) {
+		 direction /= length; //normalizar el vector
+		 position += direction * speed * deltaTime;
+	 }
+ }
 
  /**
   * @brief Sets the position of the transform.

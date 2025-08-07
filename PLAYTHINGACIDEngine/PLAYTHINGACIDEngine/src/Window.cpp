@@ -77,7 +77,13 @@ void
 }
 
 void 
- Window::destroy() {
+ Window::update() {
+   //almacena el deltatime una sola vez
+    deltaTime = clock.restart();
+}
+
+void
+Window::destroy() {
     m_windowPtr.release();
- //SAFE_PTR_RELEASE(m_window);
+    //SAFE_PTR_RELEASE(m_window);
 }
