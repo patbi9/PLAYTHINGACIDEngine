@@ -59,6 +59,7 @@ public:
 private:
  EngineUtilities::TSharedPointer<Window> m_windowPtr; ///< Pointer to the application window.
  EngineUtilities::TSharedPointer<Actor> m_ACircle;  ///< Pointer to the first actor.
+ EngineUtilities::TSharedPointer<Actor> m_ATrack;   ///< Pointer to the track actor.
  std::vector<sf::Vector2f> m_waypoints;
  size_t m_currentWaypointIndex = 0;
 };

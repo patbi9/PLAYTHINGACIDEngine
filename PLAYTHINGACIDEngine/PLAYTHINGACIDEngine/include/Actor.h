@@ -3,6 +3,7 @@
 #include "ECS/Entity.h"
 #include "CShape.h"
 #include "ECS/Transform.h"
+#include "ECS/Texture.h"
 
 /**
  * @class Actor
@@ -57,6 +58,10 @@ public:
   */
  void 
   destroy() override {};
+
+
+ void
+	 setTexture(const EngineUtilities::TSharedPointer<Texture>& texture);
 
  /**
   * @brief Retrieves a component of the specified type attached to the actor.

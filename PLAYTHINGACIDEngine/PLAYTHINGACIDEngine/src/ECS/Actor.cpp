@@ -31,3 +31,14 @@ Actor::render(const EngineUtilities::TSharedPointer<Window>& window) {
   }
  }
 }
+
+void
+Actor::setTexture(const EngineUtilities::TSharedPointer<Texture>& texture) {
+ auto shape = getComponent<CShape>();
+ if (shape) {
+  if (!texture.isNull()) {
+   shape->setTexture(texture);
+   addComponent(texture);
+  }
+ }
+}

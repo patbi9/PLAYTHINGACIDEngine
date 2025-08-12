@@ -1,8 +1,10 @@
 #pragma once
 #include "Prerequisites.h"
 #include "ECS\Component.h"
+#include "ECS\Texture.h"
 
 class Window;
+//class Texture;
 
 /**
  * @class CShape
@@ -101,6 +103,9 @@ public:
   */
  void 
   setScale(const sf::Vector2f& scl);
+
+ void
+	 setTexture(const EngineUtilities::TSharedPointer<Texture>& texture);
 
 private:
  EngineUtilities::TSharedPointer<sf::Shape> m_shapePtr; ///< Pointer to the SFML shape.

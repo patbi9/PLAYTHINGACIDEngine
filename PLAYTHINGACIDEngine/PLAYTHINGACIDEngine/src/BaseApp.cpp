@@ -1,5 +1,7 @@
 #include "BaseApp.h"
 #include "Math/EngineMath.h"
+#include "ECS/Texture.h"
+#include "ResourceManager.h"
 
 
 BaseApp::~BaseApp() {
@@ -25,6 +27,9 @@ BaseApp::run() {
 
 bool
 BaseApp::init() {
+
+	ResourceManager& resourceMan = ResourceManager::getInstance();
+
  m_windowPtr = EngineUtilities::MakeShared<Window>(1920, 1080, "PLAYTHINGACIDEngine");
  if (!m_windowPtr) {
   ERROR("BaseApp",
@@ -37,9 +42,16 @@ BaseApp::init() {
  m_ACircle = EngineUtilities::MakeShared<Actor>("Square Actor");
  if (m_ACircle) {
   m_ACircle->getComponent<CShape>()->createShape(ShapeType::RECTANGLE);
-  m_ACircle->getComponent<CShape>()->setFillColor(sf::Color::Red);
+  m_ACircle->getComponent<CShape>()->setFillColor(sf::Color::White);
   m_ACircle->getComponent<Transform>()->setPosition(sf::Vector2f(300.f, 150.f));
-  m_ACircle->getComponent<Transform>()->setRotation(sf::Vector2f(45.f, 45.f));
+  m_ACircle->getComponent<Transform>()->setScale(sf::Vector2f(.86f, .75f));
+  //m_ACircle->getComponent<Transform>()->setRotation(sf::Vector2f(45.f, 45.f));
+
+  //cargar la textura del actor
+  if (!resourceMan.loadTexture("Sprites/BlueRegrowFortifiedCamo", "png")) {
+	  ERROR("BaseApp", "Init", "Can´t load texture, check file path or extension");
+  }
+  m_ACircle->setTexture(resourceMan.getTexture("Sprites/BlueRegrowFortifiedCamo"));
   //m_ACircle->setName("Circle Actor");
  }
  else {
@@ -48,6 +60,31 @@ BaseApp::init() {
 		"Failed to create circle actor, check memory allocation");
   return false;
  }
+
+ //create track actor
+ m_ATrack = EngineUtilities::MakeShared<Actor>("Track Actor");
+ if (m_ATrack) {
+     m_ATrack->getComponent<CShape>()->createShape(ShapeType::RECTANGLE);
+     m_ATrack->getComponent<CShape>()->setFillColor(sf::Color::White);
+     m_ATrack->getComponent<Transform>()->setPosition(sf::Vector2f(0.f, 0.f));
+     m_ATrack->getComponent<Transform>()->setScale(sf::Vector2f(15.f, 9.69f));
+     //m_ACircle->getComponent<Transform>()->setRotation(sf::Vector2f(45.f, 45.f));
+
+     //cargar la textura del actor
+     if (!resourceMan.loadTexture("Sprites/SpaPits", "png")) {
+         ERROR("BaseApp", "Init", "Can´t load texture, check file path or extension");
+     }
+     m_ATrack->setTexture(resourceMan.getTexture("Sprites/SpaPits"));
+     //m_ACircle->setName("Circle Actor");
+ }
+ else {
+     ERROR("BaseApp",
+         "init",
+         "Failed to create track actor, check memory allocation");
+     return false;
+ }
+
+
  
  //los waypoints (no me gusta vivir)
  m_waypoints.push_back(sf::Vector2f(1200.f, 100.f));
@@ -62,6 +99,9 @@ void BaseApp::update() {
     if (!m_windowPtr.isNull()) {
         m_windowPtr->update();
     }
+
+    if (!m_ATrack.isNull())
+        m_ATrack->update(m_windowPtr->deltaTime.asSeconds());
 
     if (!m_ACircle.isNull() && !m_waypoints.empty()) {
         m_ACircle->update(m_windowPtr->deltaTime.asSeconds());
@@ -97,6 +137,10 @@ BaseApp::render() {
  }
 
  m_windowPtr->clear();
+
+ if (!m_ATrack.isNull()) {
+     m_ATrack->getComponent<CShape>()->render(m_windowPtr);
+ }
 
  if (!m_ACircle.isNull()) {
   m_ACircle->getComponent<CShape>()->render(m_windowPtr);

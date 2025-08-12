@@ -1,5 +1,6 @@
 #include "CShape.h"
 #include "Window.h"
+#include "ECS\Texture.h"
 
 void
 CShape::createShape(ShapeType type) {
@@ -12,7 +13,7 @@ CShape::createShape(ShapeType type) {
         break;
   }
   case ShapeType::RECTANGLE: {
-   auto rectSP = EngineUtilities::MakeShared<sf::RectangleShape>(sf::Vector2f(50.f, 50.f));
+   auto rectSP = EngineUtilities::MakeShared<sf::RectangleShape>(sf::Vector2f(100.f, 100.f));
         rectSP->setFillColor(sf::Color::White);
         m_shapePtr = rectSP.dynamic_pointer_cast<sf::Shape>();
         break;
@@ -91,4 +92,11 @@ void
  CShape::setScale(const sf::Vector2f& scale) {
  if (m_shapePtr) m_shapePtr->setScale(scale);
  else ERROR("CShape", "setScale", "Shape no inicializado");
+}
+
+void
+ CShape::setTexture(const EngineUtilities::TSharedPointer<Texture>& texture) {
+ if (!texture.isNull()) {
+        m_shapePtr->setTexture(&texture->getTexture());
+ }
 }
