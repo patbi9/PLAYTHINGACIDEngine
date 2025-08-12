@@ -65,6 +65,9 @@ public:
  void
 	 update();
 
+ void
+	 render();
+
  /**
   * @brief Destruye la ventana
   */

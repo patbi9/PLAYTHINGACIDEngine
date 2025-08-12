@@ -65,9 +65,13 @@ void
 }
 
 void 
- CShape::setPosition(float x, float y) {
- if (m_shapePtr) m_shapePtr->setPosition(x, y);
- else ERROR("CShape", "setPosition", "Shape no inicializado");
+CShape::setPosition(float x, float y) {
+    if (m_shapePtr) {
+        m_shapePtr->setPosition({ x, y });
+    }
+    else {
+        ERROR("CShape", "setPosition", "Shape no inicializado");
+    }
 }
 
 void
@@ -84,7 +88,7 @@ void
 
 void
  CShape::setRotation(float angle) {
- if (m_shapePtr) m_shapePtr->setRotation(angle);
+ if (m_shapePtr) m_shapePtr->setRotation(sf::degrees(angle));
  else ERROR("CShape", "setRotation", "Shape no inicializado");
 }
 

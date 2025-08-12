@@ -11,6 +11,8 @@
 
 //third parties
 #include <SFML/Graphics.hpp>
+#include <SFML\Graphics\Transformable.hpp>
+#include <SFML\System\Angle.hpp>
 #include "Memory\TSharedPointer.h"
 #include "Memory\TWeakPointer.h"
 #include "Memory\TStaticPtr.h"
@@ -18,6 +20,8 @@
 
 
 //imgui
+//#include <imgui.h>
+#include "imgui-SFML.h"
 
 // MACRO for safe release of resources
 #define SAFE_PTR_RELEASE(x) if(x != nullptr) { delete x; x = nullptr; }

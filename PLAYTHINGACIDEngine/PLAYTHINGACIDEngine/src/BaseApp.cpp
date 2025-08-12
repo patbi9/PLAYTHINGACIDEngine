@@ -2,6 +2,7 @@
 #include "Math/EngineMath.h"
 #include "ECS/Texture.h"
 #include "ResourceManager.h"
+#include <imgui.h>
 
 
 BaseApp::~BaseApp() {
@@ -43,7 +44,7 @@ BaseApp::init() {
  if (m_ACircle) {
   m_ACircle->getComponent<CShape>()->createShape(ShapeType::RECTANGLE);
   m_ACircle->getComponent<CShape>()->setFillColor(sf::Color::White);
-  m_ACircle->getComponent<Transform>()->setPosition(sf::Vector2f(300.f, 150.f));
+  m_ACircle->getComponent<Transform>()->setPosition(sf::Vector2f(479.f, 350.f));
   m_ACircle->getComponent<Transform>()->setScale(sf::Vector2f(.86f, .75f));
   //m_ACircle->getComponent<Transform>()->setRotation(sf::Vector2f(45.f, 45.f));
 
@@ -87,10 +88,24 @@ BaseApp::init() {
 
  
  //los waypoints (no me gusta vivir)
- m_waypoints.push_back(sf::Vector2f(1200.f, 100.f));
- m_waypoints.push_back(sf::Vector2f(1200.f, 600.f));
- m_waypoints.push_back(sf::Vector2f(300.f, 600.f));
- m_waypoints.push_back(sf::Vector2f(300.f, 150.f)); // regreso al inicio, opcional
+ m_waypoints.push_back(sf::Vector2f(479.f, 350.f));
+ m_waypoints.push_back(sf::Vector2f(650.f, 408.f));
+ m_waypoints.push_back(sf::Vector2f(814.f, 563.f));
+ m_waypoints.push_back(sf::Vector2f(981.f, 641.f));
+ m_waypoints.push_back(sf::Vector2f(1138.f, 571.f));
+ m_waypoints.push_back(sf::Vector2f(1204.f, 408.f));
+ m_waypoints.push_back(sf::Vector2f(1137.f, 271.f));
+ m_waypoints.push_back(sf::Vector2f(974.f, 188.f));
+ m_waypoints.push_back(sf::Vector2f(820.f, 238.f));
+ m_waypoints.push_back(sf::Vector2f(724.f, 378.f));
+ m_waypoints.push_back(sf::Vector2f(729.f, 551.f));
+ m_waypoints.push_back(sf::Vector2f(660.f, 715.f));
+ m_waypoints.push_back(sf::Vector2f(491.f, 792.f));
+ m_waypoints.push_back(sf::Vector2f(322.f, 745.f));
+ m_waypoints.push_back(sf::Vector2f(244.f, 585.f));
+ m_waypoints.push_back(sf::Vector2f(301.f, 398.f));
+
+
 
  return true;
 }
@@ -99,6 +114,8 @@ void BaseApp::update() {
     if (!m_windowPtr.isNull()) {
         m_windowPtr->update();
     }
+
+    ImGui::ShowDemoWindow();
 
     if (!m_ATrack.isNull())
         m_ATrack->update(m_windowPtr->deltaTime.asSeconds());
@@ -146,6 +163,7 @@ BaseApp::render() {
   m_ACircle->getComponent<CShape>()->render(m_windowPtr);
  }
 
+ m_windowPtr->render();
  m_windowPtr->display();
 }
 
