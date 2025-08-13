@@ -104,8 +104,12 @@ public:
  void 
   setScale(const sf::Vector2f& scl);
 
+ /**
+  * @brief Sets the texture of the shape.
+  * @param TSharedPointer texture.
+  */
  void
-	 setTexture(const EngineUtilities::TSharedPointer<Texture>& texture);
+  setTexture(const EngineUtilities::TSharedPointer<Texture>& texture);
 
 private:
  EngineUtilities::TSharedPointer<sf::Shape> m_shapePtr; ///< Pointer to the SFML shape.

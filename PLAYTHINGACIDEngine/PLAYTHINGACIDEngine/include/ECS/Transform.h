@@ -1,3 +1,18 @@
+/**
+ * @file Transform.h
+ * @brief ECS component for 2D spatial transforms (position, rotation, scale).
+ *
+ * @details
+ * The Transform component stores position, rotation, and scale in 2D space and
+ * provides basic setters/getters plus a simple steering helper (`seek`) that moves
+ * the entity toward a target position when outside a given range.
+ *
+ * @note Rotation is represented as a 2D vector. Its semantic meaning depends on
+ * the engine convention (e.g., storing yaw/pitch or an angle plus auxiliary data).
+ * @warning Raw pointer accessors (`getPosData`, `getRotData`, `getScaData`) expose
+ * underlying memory; use with care and ensure the object outlives any external use.
+ */
+
 #pragma once
 #include "Prerequisites.h"
 #include "Component.h"
@@ -12,7 +27,7 @@ class Window;
  *
  * This component is typically attached to entities that require spatial transformations.
  */
-class 
+class
  Transform : public Component
 {
 public:
@@ -21,11 +36,10 @@ public:
   * Position = (0, 0), Rotation = (0, 0), Scale = (1, 1)
   */
  Transform() : Component(ComponentType::TRANSFORM),
-  position(0.0f, 0.0f),
-  rotation(0.0f, 0.0f),
-  scale(1.0f, 1.0f)
-  {
-  }
+		       position(0.0f, 0.0f),
+		       rotation(0.0f, 0.0f),
+		       scale(1.0f, 1.0f){
+ }
 
  /**
   * @brief Called when the component is initialized.
@@ -37,14 +51,14 @@ public:
   * @brief Updates the component logic (no-op for transform).
   * @param deltaTime Time elapsed since last frame.
   */
- void 
+ void
   update(float deltaTime) override {}
 
  /**
   * @brief Renders the component (no-op for transform).
   * @param window Shared pointer to the rendering window.
   */
- void 
+ void
   render(const EngineUtilities::TSharedPointer<Window>& window) override {}
 
  /**
@@ -53,18 +67,31 @@ public:
  void
   destroy() override {}
 
+ /**
+  * @brief Simple steering behavior that moves toward a target if outside a radius.
+  *
+  * @param targetPosition Target world position to seek.
+  * @param speed Movement speed in world units per second.
+  * @param deltaTime Time step (seconds) since the previous frame.
+  * @param range Do-nothing radius; if the distance to target is <= range, no move.
+  *
+  * @details
+  * Computes a normalized direction toward @p targetPosition and advances the
+  * current @ref position by `direction * speed * deltaTime` only when the distance
+  * to the target is greater than @p range.
+  */
  void
-	 seek(const sf::Vector2f& targetPosition,
-		 float speed,
-		 float deltaTime,
-		 float range) {
-	 sf::Vector2f direction = targetPosition - position;
-	 float length = sqrt(direction.x * direction.x + direction.y * direction.y);
+  seek(const sf::Vector2f& targetPosition,
+	   float speed,
+	   float deltaTime,
+	   float range) {
+  sf::Vector2f direction = targetPosition - position;
+  float length = sqrt(direction.x * direction.x + direction.y * direction.y);
 
-	 if (length > range) {
-		 direction /= length; //normalizar el vector
-		 position += direction * speed * deltaTime;
-	 }
+  if (length > range) {
+   direction /= length; //normalizar el vector
+   position += direction * speed * deltaTime;
+  }
  }
 
  /**
@@ -121,19 +148,34 @@ public:
   return scale;
  }
 
+ /**
+ * @brief Provides raw pointer access to the position data (x, y).
+ * @return Pointer to the first float component of @ref position.
+ * @warning Exposes internal storage; ensure lifetime and avoid aliasing issues.
+ */
  float*
-	 getPosData() {
-	 return &position.x;
+  getPosData() {
+  return &position.x;
  }
 
+ /**
+  * @brief Provides raw pointer access to the rotation data (x, y).
+  * @return Pointer to the first float component of @ref rotation.
+  * @warning Exposes internal storage; ensure lifetime and avoid aliasing issues.
+  */
  float*
-	 getRotData() {
-	 return &rotation.x;
+  getRotData() {
+  return &rotation.x;
  }
 
+ /** 
+ * @brief Provides raw pointer access to the scale data (x, y).
+ * @return Pointer to the first float component of @ref scale.
+ * @warning Exposes internal storage; ensure lifetime and avoid aliasing issues.
+ */
  float*
-	 getScaData() {
-	 return &scale.x;
+  getScaData() {
+  return &scale.x;
  }
 
  /**

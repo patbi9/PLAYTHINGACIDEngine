@@ -5,7 +5,7 @@ class EngineGUI;
 
 /**
  * @class Window
- * @brief Clase que encapsula una ventana SFML
+ * @brief Class that encapsulates SFML window
  *
  */
 class
@@ -17,10 +17,10 @@ public:
  Window() = default;
 
  /**
-  * @brief Constructor que crea una ventana con las dimensiones que se especifican
-  * @param width Ancho de la ventana
-  * @param height Alto de la ventana
-  * @param title Título de la ventana
+  * @brief Constructor that creates a window with specified dimensions
+  * @param width
+  * @param height
+  * @param title
   */
  Window(int width, int height, const std::string& title);
 
@@ -30,48 +30,54 @@ public:
  ~Window();
 
  /**
-  * @brief Maneja los eventos de la ventana
+  * @brief Manages window events
   */
  void
 	 handleEvents(EngineGUI& engineGUI);
 
  /**
-  * @brief Verifica si la ventana está abierta
-  * @return Booleano si la ventana sigue abierta
+  * @brief Verifies if window is open
+  * @return Bool is window open
   */
  bool
   isOpen() const;
 
  /**
-  * @brief Borra el contenido de la ventana
-  * @param color Color de fondo negro
+  * @brief Deletes window content
+  * @param color Black background
   */
  void
   clear(const sf::Color& color = sf::Color(0, 0, 0, 255));
 
  /**
-  * @brief Dibuja un objeto en la ventana
-  * @param drawable Objeto SFML que puede dibujarse
-  * @param states Estados de renderizado
+  * @brief Draws an object on window
+  * @param drawable SFML object
+  * @param states Render states
   */
  void
   draw(const sf::Drawable& drawable,
   const sf::RenderStates& states = sf::RenderStates::Default);
 
  /**
-  * @brief Muestra lo que se dibujó
+  * @brief Shows what was drawn
   */
  void
   display();
 
+ /**
+ * @brief Window's update
+ */
  void
 	 update();
 
+ /**
+  * @brief Window's render
+  */
  void
 	 render();
 
  /**
-  * @brief Destruye la ventana
+  * @brief Destroys window
   */
  void
   destroy();
