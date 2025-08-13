@@ -1,7 +1,7 @@
 #include "EngineGUI.h"
 #include "Window.h"
 #include <imgui.h>
-
+#include "Actor.h" // Change from "ECS/Actor.h" to "Actor.h"
 void
 EngineGUI::init(const EngineUtilities::TSharedPointer<Window>& window) {
 	//initialize imgui resource
@@ -25,6 +25,190 @@ void
 EngineGUI::processEvent(const sf::Window& window, const sf::Event& event) {
 	ImGui::SFML::ProcessEvent(window, event);
 }
+
+void 
+EngineGUI::outliner(const std::vector<EngineUtilities::TSharedPointer<Actor>>& actors) {
+    ImGui::Begin("Hierarchy");
+
+    const int total = static_cast<int>(actors.size());
+    if (total == 0) {
+        selectedActorIndex = -1;
+        ImGui::TextDisabled("No actors.");
+        ImGui::End();
+        return;
+    }
+    if (selectedActorIndex >= total) selectedActorIndex = total - 1;
+    if (selectedActorIndex < 0)      selectedActorIndex = 0;
+
+    static ImGuiTextFilter filter;
+    filter.Draw("Search...", 180.0f);
+    ImGui::Separator();
+
+    for (int i = 0; i < total; ++i) {
+        const auto& actor = actors[i];
+        const std::string actorName = actor ? actor->getName() : "Unnamed Actor";
+        if (!filter.PassFilter(actorName.c_str())) continue;
+
+        ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
+        if (selectedActorIndex == i) flags |= ImGuiTreeNodeFlags_Selected;
+
+        const bool nodeOpen = ImGui::TreeNodeEx((void*)(intptr_t)i, flags, "%s", actorName.c_str());
+        if (ImGui::IsItemClicked()) selectedActorIndex = i;
+        if (nodeOpen) ImGui::TreePop();
+    }
+    ImGui::End();
+}
+
+
+void
+EngineGUI::console(const std::map<ConsolErrorType, std::vector<std::string>>& programMessages) {
+    ImGui::Begin("Console");
+
+    static ImGuiTextFilter filter; // Filtro de búsqueda
+    filter.Draw("Filter (\"error\", \"warning\", etc.)", 180.0f);
+
+    ImGui::Separator();
+
+    ImGui::BeginChild("ScrollingRegion", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar);
+
+    for (const auto& pair : programMessages) {
+        // Establece color según el tipo de mensaje
+        ImVec4 color;
+        switch (pair.first) {
+        case ConsolErrorType::ERROR:
+            color = ImVec4(1.0f, 0.4f, 0.4f, 1.0f); // Rojo para errores
+            break;
+        case ConsolErrorType::WARNING:
+            color = ImVec4(1.0f, 1.0f, 0.4f, 1.0f); // Amarillo para advertencias
+            break;
+        case ConsolErrorType::INFO:
+        default:
+            color = ImVec4(0.8f, 0.8f, 0.8f, 1.0f); // Gris para mensajes de información
+            break;
+        }
+
+        for (const auto& message : pair.second) {
+            if (!filter.PassFilter(message.c_str())) continue; // Filtrar mensajes según el filtro de búsqueda
+
+            ImGui::PushStyleColor(ImGuiCol_Text, color);
+            ImGui::Text("[%d] %s", pair.first, message.c_str());
+            ImGui::PopStyleColor();
+        }
+    }
+
+    // Desplazamiento automático al final
+    if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
+        ImGui::SetScrollHereY(1.0f);
+
+    ImGui::EndChild();
+    ImGui::End();
+}
+
+void
+EngineGUI::inspector(const std::vector<EngineUtilities::TSharedPointer<Actor>>& actors) {
+    const int total = static_cast<int>(actors.size());
+    if (total == 0 || selectedActorIndex < 0 || selectedActorIndex >= total) return;
+    ImGui::Begin("Inspector");
+    // Checkbox para Static
+    bool isStatic = false;
+    ImGui::Checkbox("##Static", &isStatic);
+    ImGui::SameLine();
+
+    // Input text para el nombre del objeto
+    char objectName[128];
+    std::string name = actors[selectedActorIndex]->getName();
+    std::copy(name.begin(), name.end(), objectName);
+    objectName[name.size()] = '\0';  // Asegurarse de terminar la cadena
+
+    //ImGui::SetNextItemWidth(ImGui::GetContentRegionAvailWidth() * 0.6f);
+    ImGui::InputText("##ObjectName", objectName, IM_ARRAYSIZE(objectName));
+    ImGui::SameLine();
+
+    // Icono (este puede ser una imagen, aquí solo como ejemplo de botón)
+    if (ImGui::Button("Icon")) {
+        // Lógica del botón de icono aquí
+    }
+
+    // Separador horizontal
+    ImGui::Separator();
+
+    // Dropdown para Tag
+    const char* tags[] = { "Untagged", "Player", "Enemy", "Environment" };
+    static int currentTag = 0;
+    //ImGui::SetNextItemWidth(ImGui::GetContentRegionAvailWidth() * 0.5f);
+    ImGui::Combo("Tag", &currentTag, tags, IM_ARRAYSIZE(tags));
+    ImGui::SameLine();
+
+    // Dropdown para Layer
+    const char* layers[] = { "Default", "TransparentFX", "Ignore Raycast", "Water", "UI" };
+    static int currentLayer = 0;
+    //ImGui::SetNextItemWidth(ImGui::GetContentRegionAvailWidth() * 0.5f);
+    ImGui::Combo("Layer", &currentLayer, layers, IM_ARRAYSIZE(layers));
+
+    ImGui::Separator();
+
+    // Transform elements
+    vec2Control("Position", actors[selectedActorIndex]->getComponent<Transform>()->getPosData());
+    vec2Control("Rotation", actors[selectedActorIndex]->getComponent<Transform>()->getRotData());
+    vec2Control("Scale", actors[selectedActorIndex]->getComponent<Transform>()->getScaData());
+
+    ImGui::End();
+}
+
+void EngineGUI::vec2Control(const std::string& label,
+    float* values,
+    float resetValues,
+    float columnWidth) {
+    ImGuiIO& io = ImGui::GetIO();
+    ImFont* boldFont = (io.Fonts && !io.Fonts->Fonts.empty()) ? io.Fonts->Fonts[0] : nullptr;
+
+    ImGui::PushID(label.c_str());
+    ImGui::Columns(2);
+    ImGui::SetColumnWidth(0, columnWidth);
+    ImGui::TextUnformatted(label.c_str());
+    ImGui::NextColumn();
+
+    ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 0, 0 });
+
+    float lineHeight = ImGui::GetFontSize() + ImGui::GetStyle().FramePadding.y * 2.0f;
+    ImVec2 buttonSize = { lineHeight + 3.0f, lineHeight };
+    float fullWidth = ImGui::CalcItemWidth();
+    float itemWidth = fullWidth / 3.0f;
+
+    // X
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
+    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.9f, 0.2f, 0.2f, 1.0f });
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
+    if (boldFont) ImGui::PushFont(boldFont);
+    if (ImGui::Button("X", buttonSize)) values[0] = resetValues;
+    if (boldFont) ImGui::PopFont();
+    ImGui::PopStyleColor(3);
+
+    ImGui::SameLine();
+    ImGui::PushItemWidth(itemWidth);
+    ImGui::DragFloat("##X", &values[0], 0.1f, 0.0f, 0.0f, "%.2f");
+    ImGui::PopItemWidth();
+    ImGui::SameLine();
+
+    // Y
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.2f, 0.7f, 0.2f, 1.0f });
+    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.3f, 0.8f, 0.3f, 1.0f });
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.2f, 0.7f, 0.2f, 1.0f });
+    if (boldFont) ImGui::PushFont(boldFont);
+    if (ImGui::Button("Y", buttonSize)) values[1] = resetValues;
+    if (boldFont) ImGui::PopFont();
+    ImGui::PopStyleColor(3);
+
+    ImGui::SameLine();
+    ImGui::PushItemWidth(itemWidth);
+    ImGui::DragFloat("##Y", &values[1], 0.1f, 0.0f, 0.0f, "%.2f");
+    ImGui::PopItemWidth();
+
+    ImGui::PopStyleVar();
+    ImGui::Columns(1);
+    ImGui::PopID();
+}
+
 
 void EngineGUI::setupGUIStyle() {
     ImGui::StyleColorsLight();

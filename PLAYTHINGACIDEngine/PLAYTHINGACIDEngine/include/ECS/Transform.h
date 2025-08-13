@@ -4,6 +4,8 @@
 #include "Math/EngineMath.h"
 using sf::Vector2f;
 
+class Window;
+
 /**
  * @class Transform
  * @brief Component that handles position, rotation, and scale in 2D space.
@@ -117,6 +119,21 @@ public:
  Vector2f
   getScale() const {
   return scale;
+ }
+
+ float*
+	 getPosData() {
+	 return &position.x;
+ }
+
+ float*
+	 getRotData() {
+	 return &rotation.x;
+ }
+
+ float*
+	 getScaData() {
+	 return &scale.x;
  }
 
  /**

@@ -56,7 +56,9 @@ BaseApp::init() {
 	  ERROR("BaseApp", "Init", "Can´t load texture, check file path or extension");
   }
   m_ACircle->setTexture(resourceMan.getTexture("Sprites/BlueRegrowFortifiedCamo"));
-  //m_ACircle->setName("Circle Actor");
+
+  //add actor to the actors vector
+  m_actors.push_back(m_ACircle);
  }
  else {
   ERROR("BaseApp",
@@ -120,6 +122,8 @@ void BaseApp::update() {
 
 	//update ImGui
 	m_engineGUI.update(m_windowPtr, m_windowPtr->deltaTime);
+	m_engineGUI.outliner(m_actors);
+    m_engineGUI.inspector(m_actors);
 
     ImGui::ShowDemoWindow();
 

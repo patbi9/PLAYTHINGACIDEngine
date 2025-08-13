@@ -58,6 +58,7 @@ public:
   destroy();
 
 private:
+ std::vector<EngineUtilities::TSharedPointer<Actor>> m_actors;
  EngineUtilities::TSharedPointer<Window> m_windowPtr; ///< Pointer to the application window.
  EngineUtilities::TSharedPointer<Actor> m_ACircle;  ///< Pointer to the first actor.
  EngineUtilities::TSharedPointer<Actor> m_ATrack;   ///< Pointer to the track actor.
