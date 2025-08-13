@@ -17,7 +17,7 @@ BaseApp::run() {
  }
 
  while (m_windowPtr->isOpen()) {
-  m_windowPtr->handleEvents();
+  m_windowPtr->handleEvents(m_engineGUI);
   update();
   render();
  }
@@ -38,6 +38,9 @@ BaseApp::init() {
 		"Failed to create window pointer, check memory allocation");
   return false;
  }
+
+ //initialize imgui resource
+ m_engineGUI.init(m_windowPtr);
 
  //create circle actor
  m_ACircle = EngineUtilities::MakeShared<Actor>("Square Actor");
@@ -115,6 +118,9 @@ void BaseApp::update() {
         m_windowPtr->update();
     }
 
+	//update ImGui
+	m_engineGUI.update(m_windowPtr, m_windowPtr->deltaTime);
+
     ImGui::ShowDemoWindow();
 
     if (!m_ATrack.isNull())
@@ -164,10 +170,17 @@ BaseApp::render() {
  }
 
  m_windowPtr->render();
+
+//render ImGui
+ m_engineGUI.render(m_windowPtr);
+
  m_windowPtr->display();
 }
 
 void
 BaseApp::destroy() {
+	//destroy ImGui resources
+	m_engineGUI.destroy();
+
  //m_window->destroy();
 }

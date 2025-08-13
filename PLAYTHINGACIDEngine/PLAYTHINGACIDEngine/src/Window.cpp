@@ -1,4 +1,5 @@
 #include "window.h"
+#include "EngineGUI.h"
 
 Window::Window(int width, int height, const std::string& title) {
  //Inicializar ventana
@@ -16,27 +17,22 @@ Window::Window(int width, int height, const std::string& title) {
  else {
   ERROR("Window", "Window", "Failed to create window");
  }
-
- //initialize imgui resource
- ImGui::SFML::Init(*m_windowPtr);
 }
 
 Window::~Window(){
-	ImGui::SFML::Shutdown();
+
  m_windowPtr.release();
- //SAFE_PTR_RELEASE(m_window);
+
 }
 
 void 
-Window::handleEvents()
+Window::handleEvents(EngineGUI& engineGUI)
 {
-    //while (m_windowPtr->isOpen())
-    //{
-    //}
         //process events
         while (const std::optional event = m_windowPtr->pollEvent())
         {
-            ImGui::SFML::ProcessEvent(*m_windowPtr, *event);
+            
+			engineGUI.processEvent(*m_windowPtr, *event); // Process ImGui events
             //close window: exit
             if (event->is<sf::Event::Closed>())
                 m_windowPtr->close();
@@ -91,17 +87,16 @@ void
  Window::update() {
    //almacena el deltatime una sola vez
     deltaTime = clock.restart();
-	ImGui::SFML::Update(*m_windowPtr, deltaTime); // Actualizar ImGui con el deltaTime
 }
 
 void
 Window::render() {
-    ImGui::SFML::Render(*m_windowPtr); // Actualizar ImGui con el deltaTime
+    
 }
 
 void
 Window::destroy() {
-    ImGui::SFML::Shutdown();
+   
     m_windowPtr.release();
-    //SAFE_PTR_RELEASE(m_window);
+   
 }

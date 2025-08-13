@@ -11,8 +11,6 @@
 
 //third parties
 #include <SFML/Graphics.hpp>
-#include <SFML\Graphics\Transformable.hpp>
-#include <SFML\System\Angle.hpp>
 #include "Memory\TSharedPointer.h"
 #include "Memory\TWeakPointer.h"
 #include "Memory\TStaticPtr.h"

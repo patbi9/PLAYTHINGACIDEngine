@@ -3,6 +3,7 @@
 #include "Window.h"
 #include "CShape.h"
 #include "Actor.h"
+#include "EngineGUI.H"
 
 /**
  * @class BaseApp
@@ -62,4 +63,6 @@ private:
  EngineUtilities::TSharedPointer<Actor> m_ATrack;   ///< Pointer to the track actor.
  std::vector<sf::Vector2f> m_waypoints;
  size_t m_currentWaypointIndex = 0;
+
+ EngineGUI m_engineGUI; ///< GUI manager for the application.
 };

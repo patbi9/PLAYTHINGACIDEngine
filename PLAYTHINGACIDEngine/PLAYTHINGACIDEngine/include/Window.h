@@ -1,6 +1,8 @@
 #pragma once
 #include "Prerequisites.h"
 
+class EngineGUI;
+
 /**
  * @class Window
  * @brief Clase que encapsula una ventana SFML
@@ -31,7 +33,7 @@ public:
   * @brief Maneja los eventos de la ventana
   */
  void
-  handleEvents();
+	 handleEvents(EngineGUI& engineGUI);
 
  /**
   * @brief Verifica si la ventana está abierta
@@ -75,9 +77,9 @@ public:
   destroy();
 
 private:
- EngineUtilities::TUniquePtr < sf::RenderWindow> m_windowPtr;
  sf::View m_view;
 public:
+	EngineUtilities::TUniquePtr < sf::RenderWindow> m_windowPtr;
  sf::Time deltaTime;
  sf::Clock clock;
 };
