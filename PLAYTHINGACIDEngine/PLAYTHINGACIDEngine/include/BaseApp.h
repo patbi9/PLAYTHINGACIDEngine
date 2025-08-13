@@ -4,6 +4,7 @@
 #include "CShape.h"
 #include "Actor.h"
 #include "EngineGUI.H"
+#include "A_Racer.h"
 
 /**
  * @class BaseApp
@@ -58,10 +59,14 @@ public:
   destroy();
 
 private:
- std::vector<EngineUtilities::TSharedPointer<Actor>> m_actors;
+	std::vector<EngineUtilities::TSharedPointer<Actor>>  m_actors;   // para el Outliner
+	std::vector<EngineUtilities::TSharedPointer<A_Racer>> m_racers;  // para update + leaderboard
+
+
+
  EngineUtilities::TSharedPointer<Window> m_windowPtr; ///< Pointer to the application window.
- EngineUtilities::TSharedPointer<Actor> m_ACircle;  ///< Pointer to the first actor.
  EngineUtilities::TSharedPointer<Actor> m_ATrack;   ///< Pointer to the track actor.
+
  std::vector<sf::Vector2f> m_waypoints;
  size_t m_currentWaypointIndex = 0;
 

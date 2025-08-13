@@ -1,8 +1,10 @@
 #pragma once
 #include "Prerequisites.h"
+#include <vector>
 
 class Window;
 class Actor;
+class A_Racer;
 
 class
 EngineGUI {
@@ -27,25 +29,27 @@ public:
  processEvent(const sf::Window& window, const sf::Event& event);
 
  void
-	 setupGUIStyle();
+ setupGUIStyle();
 
  void
-	 barMenu();
+ barMenu();
 
  void
-	 outliner(const std::vector<EngineUtilities::TSharedPointer<Actor>>& actors);
+ outliner(const std::vector<EngineUtilities::TSharedPointer<Actor>>& actors);
 
  void
-	 console(const std::map<ConsolErrorType, std::vector<std::string>>& programMessages);
+ console(const std::map<ConsolErrorType, std::vector<std::string>>& programMessages);
 
  void
-	 inspector(const std::vector<EngineUtilities::TSharedPointer<Actor>>& actors);
+ inspector(const std::vector<EngineUtilities::TSharedPointer<Actor>>& actors);
 
  void
-	 vec2Control(const std::string& label, 
+ vec2Control(const std::string& label, 
 				 float* values, 
 				 float resetValues = 0.0f, 
 		         float columnWidth = 100.0f);
+ void 
+ leaderboard(const std::vector<EngineUtilities::TSharedPointer<A_Racer>>& racers);
 
 private:
 	int selectedActorIndex = -1; // Actor seleccionado en el outliner

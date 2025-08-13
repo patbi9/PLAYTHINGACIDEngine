@@ -2,6 +2,8 @@
 #include "Window.h"
 #include <imgui.h>
 #include "Actor.h" // Change from "ECS/Actor.h" to "Actor.h"
+#include "A_Racer.h"
+
 void
 EngineGUI::init(const EngineUtilities::TSharedPointer<Window>& window) {
 	//initialize imgui resource
@@ -373,6 +375,65 @@ void EngineGUI::barMenu() {
 
     // Ejemplo: mostrar la demo si está activada
     // if (show_demo) ImGui::ShowDemoWindow(&show_demo);
+}
+
+
+void EngineGUI::leaderboard(
+    const std::vector<EngineUtilities::TSharedPointer<A_Racer>>& racers)
+{
+    ImGui::Begin("Leaderboard");
+
+    if (racers.empty()) {
+        ImGui::TextDisabled("No racers.");
+        ImGui::End();
+        return;
+    }
+
+    struct Row {
+        float prog;
+        EngineUtilities::TSharedPointer<A_Racer> r;
+    };
+
+    std::vector<Row> rows;
+    rows.reserve(racers.size());
+    for (auto& r : racers) {
+        if (!r) continue;
+        rows.push_back({ r->getProgressMeters(), r });
+    }
+
+    std::sort(rows.begin(), rows.end(),
+        [](const Row& a, const Row& b) { return a.prog > b.prog; });
+
+    // Tabla
+    if (ImGui::BeginTable("lb_table", 3,
+        ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg | ImGuiTableFlags_SizingStretchProp))
+    {
+        ImGui::TableSetupColumn("#", ImGuiTableColumnFlags_WidthFixed, 32.f);
+        ImGui::TableSetupColumn("Racer");
+        ImGui::TableSetupColumn("Progress (m)", ImGuiTableColumnFlags_WidthFixed, 120.f);
+        ImGui::TableHeadersRow();
+
+        for (int i = 0; i < (int)rows.size(); ++i) {
+            ImGui::TableNextRow();
+
+            ImGui::TableSetColumnIndex(0);
+            // Medallitas para top 3
+            if (i == 0) { ImGui::TextColored(ImVec4(1.0f, 0.84f, 0.0f, 1.0f), "%d", i + 1); }
+            else if (i == 1) { ImGui::TextColored(ImVec4(0.75f, 0.75f, 0.75f, 1.0f), "%d", i + 1); }
+            else if (i == 2) { ImGui::TextColored(ImVec4(0.80f, 0.50f, 0.20f, 1.0f), "%d", i + 1); }
+            else { ImGui::Text("%d", i + 1); }
+
+            ImGui::TableSetColumnIndex(1);
+            ImGui::TextUnformatted(rows[i].r->getName().c_str());
+
+            ImGui::TableSetColumnIndex(2);
+            ImGui::Text("%.1f", rows[i].prog);
+        }
+
+        ImGui::EndTable();
+    }
+
+    ImGui::End();
 }
 
 void

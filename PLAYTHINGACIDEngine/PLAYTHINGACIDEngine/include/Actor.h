@@ -13,7 +13,7 @@
  * and provides functionality to retrieve components of a specific type.
  */
 class
- Actor : Entity {
+ Actor : public Entity {
 public:
  /**
   * @brief Default constructor.
@@ -63,7 +63,7 @@ public:
  void
 	 setTexture(const EngineUtilities::TSharedPointer<Texture>& texture);
 
- std::string getName() { 
+ std::string getName() const { 
 	 return m_name; 
  }	
 
@@ -74,6 +74,8 @@ public:
   */
  template<typename T>
   EngineUtilities::TSharedPointer<T> getComponent();
+ template<typename T>
+  EngineUtilities::TSharedPointer<T> getComponent() const;
 
 private:
  std::string m_name = "Actor"; ///< Name of the actor.
@@ -90,4 +92,11 @@ Actor::getComponent() {
  }
  // Return empty shared pointer if not found
  return EngineUtilities::TSharedPointer<T>();
+}
+
+template<typename T>
+inline EngineUtilities::TSharedPointer<T>
+Actor::getComponent() const {
+	    // delega a la versión no-const para no duplicar lógica
+		return const_cast<Actor*>(this)->template getComponent<T>();
 }

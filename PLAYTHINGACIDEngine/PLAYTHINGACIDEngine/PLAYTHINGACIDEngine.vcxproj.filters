@@ -72,6 +72,9 @@
     <ClCompile Include="src\EngineGUI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ECS\A_Racer.cpp">
+      <Filter>Source Files\ECS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\BaseApp.h">
@@ -147,6 +150,9 @@
       <Filter>imgui</Filter>
     </ClInclude>
     <ClInclude Include="include\EngineGUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\A_Racer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
